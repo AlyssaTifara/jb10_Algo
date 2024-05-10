@@ -35,7 +35,6 @@ public class DoubleLinkedLists {
             size++;
         }
     }
-    
 
     public void add(int id, String judul, double rating, int index) throws Exception{
         if(isEmpty()){
@@ -43,25 +42,23 @@ public class DoubleLinkedLists {
         }else if(index < 0 || index > size){
             throw new Exception("Nilai indeks di luar batas");
         }else{
-            Node current = head;
-            int i = 0;
-            while ((i < index)) {
-                current = current.next;
-                i++;
-            }
-            if(current.prev == null){
-                Node newNode = new Node(null, id, judul, rating, current);
-                current.prev = newNode;
-                head = newNode;
-            }else{
+            if (index == 0) {
+                addFirst(id, judul, rating);
+            } else if (index == size){
+                addLast(id, judul, rating);
+            } else {
+                Node current = head;
+                int i = 0;
+                while (i < index) {
+                    current = current.next;
+                    i++;
+                }
                 Node newNode = new Node(current.prev, id, judul, rating, current);
-                newNode.prev = current.prev;
-                newNode.next = current;
                 current.prev.next = newNode;
                 current.prev = newNode;
+                size++;
             }
         }
-        size++;
     }
 
     public int size(){
@@ -165,13 +162,13 @@ public class DoubleLinkedLists {
             for (int i = 0; i < position; i++) {
                 current = current.next;
             }
-            System.out.println("--------------------------------------------------");
+            System.out.println("-------------------------------------");
             System.out.println("Data ID Film : " + current.id + " berada di node ke-" + (position+1));
             System.out.println("IDENTITAS  : ");
             System.out.println("ID Film      : " + current.id);
             System.out.println("Judul Film   : " + current.judul);
             System.err.println("Rating     : " + current.rating);
-            System.out.println("------------------------");
+            System.out.println("------------------------------------");
         } else {
             System.out.println("Data dengan ID " + id + " tidak ditemukan");
         }
@@ -181,7 +178,7 @@ public class DoubleLinkedLists {
         if (isEmpty() || size == 1) {
             return;
         }
-        
+
         for (Node current = head; current.next != null; current = current.next) {
             if (current.rating < current.next.rating) {
                 int tempId = current.id;
